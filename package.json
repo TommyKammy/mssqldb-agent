@@ -1,0 +1,15 @@
+{
+  "name": "mssqldb-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-assisted Microsoft SQL Server DBA support.",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/**/*.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "typescript": "^5.9.3"
+  }
+}
