@@ -1,7 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
-import { loadDiagnosticSnapshotFixture, parseDiagnosticSnapshot } from "./diagnostic-snapshot";
+import { parseDiagnosticSnapshot } from "./diagnostic-snapshot";
+import { loadDiagnosticSnapshotFixture } from "../ingestion/diagnostic-snapshot-fixture";
 
 test("loadDiagnosticSnapshotFixture parses an offline diagnostic snapshot fixture", () => {
   const snapshot = loadDiagnosticSnapshotFixture(
@@ -39,5 +42,19 @@ test("parseDiagnosticSnapshot rejects malformed input", () => {
         waitStats: [],
       }),
     /diagnostic snapshot\.topQueries must be an array/,
+  );
+});
+
+test("loadDiagnosticSnapshotFixture reports the fixture path for invalid JSON", async () => {
+  const fixturePath = path.join(
+    await fs.promises.mkdtemp(path.join(os.tmpdir(), "snapshot-fixture-")),
+    "invalid-snapshot.json",
+  );
+
+  await fs.promises.writeFile(fixturePath, "{ invalid json", "utf8");
+
+  assert.throws(
+    () => loadDiagnosticSnapshotFixture(fixturePath),
+    /Failed to parse diagnostic snapshot fixture JSON from ".*invalid-snapshot\.json"/,
   );
 });

@@ -1,5 +1,3 @@
-import fs from "node:fs";
-
 export interface SqlServerEnvironmentMetadata {
   serverName: string;
   databaseName: string;
@@ -30,7 +28,7 @@ export interface DiagnosticSnapshot {
 export function parseDiagnosticSnapshot(input: unknown): DiagnosticSnapshot {
   const root = expectRecord(input, "diagnostic snapshot");
 
-  return createSnapshot({
+  return {
     environment: parseEnvironment(root.environment),
     waitStats: expectArray(root.waitStats, "diagnostic snapshot.waitStats").map((entry, index) =>
       parseWaitStatSample(entry, index),
@@ -38,12 +36,7 @@ export function parseDiagnosticSnapshot(input: unknown): DiagnosticSnapshot {
     topQueries: expectArray(root.topQueries, "diagnostic snapshot.topQueries").map((entry, index) =>
       parseTopQuerySample(entry, index),
     ),
-  });
-}
-
-export function loadDiagnosticSnapshotFixture(filePath: string): DiagnosticSnapshot {
-  const content = fs.readFileSync(filePath, "utf8");
-  return parseDiagnosticSnapshot(JSON.parse(content) as unknown);
+  };
 }
 
 export function createSnapshot(input: DiagnosticSnapshot): DiagnosticSnapshot {
