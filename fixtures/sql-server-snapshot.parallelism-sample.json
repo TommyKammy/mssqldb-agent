@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "serverName": "sqlstage-02",
+    "databaseName": "InventoryDb",
+    "sqlServerVersion": "SQL Server 2019 CU28",
+    "capturedAt": "2026-03-09T08:15:00.000Z"
+  },
+  "waitStats": [
+    {
+      "waitType": "CXPACKET",
+      "waitTimeMs": 22110,
+      "signalWaitTimeMs": 4188,
+      "waitingTasksCount": 304
+    },
+    {
+      "waitType": "SOS_SCHEDULER_YIELD",
+      "waitTimeMs": 14002,
+      "signalWaitTimeMs": 3904,
+      "waitingTasksCount": 227
+    }
+  ],
+  "topQueries": [
+    {
+      "queryId": "q-3301",
+      "statementText": "SELECT TOP (100) * FROM dbo.StockLedger ORDER BY ModifiedAt DESC",
+      "averageDurationMs": 94.2,
+      "executionCount": 42881
+    }
+  ]
+}
