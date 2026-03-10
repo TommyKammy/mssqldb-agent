@@ -1,0 +1,36 @@
+{
+  "environment": {
+    "serverName": "sqlprod-01",
+    "databaseName": "SalesDb",
+    "sqlServerVersion": "SQL Server 2022 CU14",
+    "capturedAt": "2026-03-10T12:34:56.000Z"
+  },
+  "waitStats": [
+    {
+      "waitType": "PAGEIOLATCH_SH",
+      "waitTimeMs": 182340,
+      "signalWaitTimeMs": 9340,
+      "waitingTasksCount": 1489
+    },
+    {
+      "waitType": "WRITELOG",
+      "waitTimeMs": 58220,
+      "signalWaitTimeMs": 2710,
+      "waitingTasksCount": 612
+    }
+  ],
+  "topQueries": [
+    {
+      "queryId": "q-1001",
+      "statementText": "EXEC dbo.ProcessSalesOrder @OrderId = @P1",
+      "averageDurationMs": 842.7,
+      "executionCount": 1290
+    },
+    {
+      "queryId": "q-2055",
+      "statementText": "SELECT CustomerId, SUM(TotalDue) FROM dbo.Invoice GROUP BY CustomerId",
+      "averageDurationMs": 126.4,
+      "executionCount": 8042
+    }
+  ]
+}
